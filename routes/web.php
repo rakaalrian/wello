@@ -15,6 +15,14 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/boards', 'BoardController@index');
-$router->get('/boards/{id}', 'BoardController@show');
-$router->post('/boards', 'BoardController@store');
+$router->post('/register', 'AuthController@register');
+$router->post('/login', 'AuthController@login');
+$router->get('/logout', 'AuthController@logout');
+
+$router->group(['prefix'=>'boards'], function($router){
+  $router->get('/', 'BoardController@index');
+  $router->get('/{id}', 'BoardController@show');
+  $router->post('/', 'BoardController@store');
+  $router->put('/{id}', 'BoardController@update');
+  $router->delete('/{id}', 'BoardController@destroy');
+});
